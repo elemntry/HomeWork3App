@@ -19,7 +19,7 @@ RegistryKey[] regKeyArray = new RegistryKey[] { Registry.ClassesRoot,
 
 foreach (RegistryKey regKey in regKeyArray)
 {
-    Console.WriteLine("{0} - всего элементов: {1}.", regKey.Name, regKey.SubKeyCount);
+    Console.WriteLine("{0} - total elements: {1}.", regKey.Name, regKey.SubKeyCount);
 }
 
 // Навигация по реестру
@@ -28,7 +28,7 @@ RegistryKey? software = localMachine.OpenSubKey("Software");
 RegistryKey? microsoft = software.OpenSubKey("Microsoft");
 // software.Close();
 
-Console.WriteLine("{0} - всего элементов: {1}.", microsoft.Name, microsoft.SubKeyCount);
+Console.WriteLine("{0} - total elements: {1}.", microsoft.Name, microsoft.SubKeyCount);
 // microsoft.Close();
 
 
@@ -36,7 +36,7 @@ Console.WriteLine("{0} - всего элементов: {1}.", microsoft.Name, m
 RegistryKey profileList = microsoft.OpenSubKey("Windows NT").OpenSubKey("CurrentVersion").OpenSubKey("ProfileList");
 
 // всего пользователей
-Console.WriteLine("{0} - всего элементов: {1}.", profileList.Name, profileList.SubKeyCount);
+Console.WriteLine("{0} - total elements: {1}.", profileList.Name, profileList.SubKeyCount);
 
 
 List<string> users = new List<string>();
@@ -49,7 +49,7 @@ foreach (string keyName in profileList.GetSubKeyNames())
     {
         users.Add(keyName);
     }
-    Console.WriteLine("{0} - всего элементов: {1}.", key.Name, key.ValueCount);
+    Console.WriteLine("{0} - all elements: {1}.", key.Name, key.ValueCount);
 }
 
 // Находим инфо о пользователях
@@ -66,7 +66,7 @@ foreach (string user in users)
 }
 
 Console.WriteLine("##############");
-Console.WriteLine($"Все пользователей: {users.Count}");
+Console.WriteLine($"All users: {users.Count}");
 users.ForEach(user => { Console.WriteLine(user); });
 Console.WriteLine("##############");
 
@@ -83,7 +83,7 @@ foreach (RegistryKey user in usersInfo)
 }
 
 Console.WriteLine("##########################################################");
-Console.WriteLine("############## Пользователи ##############################");
+Console.WriteLine("##################### Users ##############################");
 Console.WriteLine("##########################################################");
 RegistryKey ke1y = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList");
 
@@ -111,29 +111,29 @@ if (ke1y != null)
     ke1y.Close();
 }
 Console.WriteLine("################################################################");
-Console.WriteLine("############## Сетевый Интерфейсы ##############################");
+Console.WriteLine("############## Network interfaces ##############################");
 Console.WriteLine("################################################################");
 NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
 
 foreach (NetworkInterface networkInterface in networkInterfaces)
 {
-    Console.WriteLine($"Имя интерфейса: {networkInterface.Name}");
-    Console.WriteLine($"Описание: {networkInterface.Description}");
-    Console.WriteLine($"Тип интерфейса: {networkInterface.NetworkInterfaceType}");
-    Console.WriteLine($"Состояние: {networkInterface.OperationalStatus}");
+    Console.WriteLine($"Interface name: {networkInterface.Name}");
+    Console.WriteLine($"Description: {networkInterface.Description}");
+    Console.WriteLine($"Interface type: {networkInterface.NetworkInterfaceType}");
+    Console.WriteLine($"Status: {networkInterface.OperationalStatus}");
 
     IPInterfaceProperties ipProperties = networkInterface.GetIPProperties();
     foreach (UnicastIPAddressInformation ip in ipProperties.UnicastAddresses)
     {
-        Console.WriteLine($"IP-адрес: {ip.Address}");
-        Console.WriteLine($"Маска подсети: {ip.IPv4Mask}");
+        Console.WriteLine($"IP address: {ip.Address}");
+        Console.WriteLine($"IP v4 mask: {ip.IPv4Mask}");
     }
 
     Console.WriteLine();
 }
 
 Console.WriteLine("################################################################");
-Console.WriteLine("############## Операционная система ############################");
+Console.WriteLine("############## Operation system ############################");
 Console.WriteLine("################################################################");
 
 ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem");
@@ -163,7 +163,7 @@ foreach (ManagementObject os in queryResults)
 
 
 Console.WriteLine("################################################################");
-Console.WriteLine("############## Информация об оборудовании ######################");
+Console.WriteLine("###################### Info about devices ######################");
 Console.WriteLine("################################################################");
 
 // Create a ManagementObjectSearcher to query for device information
@@ -190,7 +190,7 @@ foreach (ManagementObject device in queryDeviceResults)
 }
 
 Console.WriteLine("################################################################");
-Console.WriteLine("############## Информация о BIOS ###############################");
+Console.WriteLine("###################### BIOS INFO ###############################");
 Console.WriteLine("################################################################");
 
 ManagementObjectSearcher searcherBios = new ManagementObjectSearcher("SELECT * FROM Win32_BIOS");
@@ -219,7 +219,7 @@ foreach (ManagementObject bios in queryBiosResults)
 
 
 Console.WriteLine("################################################################");
-Console.WriteLine("##############  Информация о программном обеспечении ###########");
+Console.WriteLine("########################  PROGRAMS INFO ########################");
 Console.WriteLine("################################################################");
 
 RegistryKey keyPrograms = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall");
